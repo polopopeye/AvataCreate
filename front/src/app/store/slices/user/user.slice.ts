@@ -5,7 +5,6 @@ import {
   fetchCreateUserReducer,
   fetchSignInGoogleReducer,
   fetchSignOutReducer,
-  fetchUserInfoReducer,
 } from './user.action';
 
 export interface IUser {
@@ -15,10 +14,6 @@ export interface IUser {
   displayName: string;
   language: string;
 
-  fetchUserInfo: {
-    loading: boolean;
-    error: string;
-  };
   fetchSignInGoogle: {
     loading: boolean;
     error: string;
@@ -40,10 +35,6 @@ const initialState: IUser = {
   displayName: '',
   language: '',
 
-  fetchUserInfo: {
-    loading: false,
-    error: '',
-  },
   fetchSignInGoogle: {
     loading: false,
     error: '',
@@ -76,7 +67,6 @@ const userSlice = createSlice({
     },
   },
   extraReducers: {
-    ...fetchUserInfoReducer,
     ...fetchSignInGoogleReducer,
     ...fetchSignOutReducer,
     ...fetchCreateUserReducer,

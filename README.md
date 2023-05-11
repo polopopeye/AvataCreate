@@ -17,3 +17,4 @@ hay un archivo con variables de entorno de ejemplo, para correr el proyecto hay 
 
 nodejs >= 19.6.1
 npm >= 9.4.0
+tsc >= 5.0.4

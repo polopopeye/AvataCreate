@@ -11,7 +11,7 @@ import { randomAnimalEmoji } from '@/app/utils/misc/randomEmoji';
 
 const useCheckUserInfo = () => {
   const { id, email, coverImg, displayName } = useSelector(
-    (state: any) => state.user
+    (state: any) => state.user,
   );
 
   const dispatch = useDispatch();
@@ -23,18 +23,16 @@ const useCheckUserInfo = () => {
           email: user.email,
           coverImg: user.photoURL,
           displayName: user.displayName,
-        })
+        }),
       );
     } else {
-      console.log('useCheckUserInfo2');
-
       dispatch(setEmptyUserInfo());
     }
   });
 
   useMemo(() => {
     if (!id || id === '') return;
-    console.log('useCheckUserInfo');
+
     dispatch(
       fetchCreateUser({
         id,
@@ -42,7 +40,7 @@ const useCheckUserInfo = () => {
         coverImg,
         displayName,
         language: 'en',
-      }) as any
+      }) as any,
     );
   }, [id]);
 };

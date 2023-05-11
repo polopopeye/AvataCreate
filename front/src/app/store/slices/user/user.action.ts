@@ -5,28 +5,6 @@ import { toast } from 'react-toastify';
 import { apiUserCreate } from '../../endpoints';
 import { IUser } from './user.slice';
 
-export const fetchUserInfo = createAsyncThunk(
-  'user/fetchUserInfo',
-  async (data, { rejectWithValue, getState }) => {
-    // const { uploadFile } = getState() as any;
-    // const { name, description, tags, type, octetStream } = uploadFile;
-  }
-);
-export const fetchUserInfoReducer = {
-  [fetchUserInfo.pending as any]: (state: IUser) => {
-    state.fetchUserInfo.loading = true;
-  },
-  [fetchUserInfo.fulfilled as any]: (state: IUser, action: any) => {
-    toast.success('Logged in successfully');
-    state.fetchUserInfo.loading = false;
-  },
-  [fetchUserInfo.rejected as any]: (state: IUser, action: any) => {
-    toast.error('Error logging in');
-    state.fetchUserInfo.loading = false;
-    state.fetchUserInfo.error = action.error.message;
-  },
-};
-
 interface CreateUserData {
   id: string;
   coverImg: string | null;
@@ -48,22 +26,8 @@ export const fetchCreateUser = createAsyncThunk(
         language,
       })
       .then((res) => {
-        const {
-          likes,
-          dislikes,
-          favorites,
-          reports,
-          id,
-          coverImg,
-          email,
-          displayName,
-          language,
-        } = res.data;
+        const { id, coverImg, email, displayName, language } = res.data;
         return {
-          likes,
-          dislikes,
-          favorites,
-          reports,
           id,
           coverImg,
           email,
@@ -74,32 +38,15 @@ export const fetchCreateUser = createAsyncThunk(
       .catch((err) => {
         return rejectWithValue(err.message);
       });
-  }
+  },
 );
 export const fetchCreateUserReducer = {
   [fetchCreateUser.pending as any]: (state: IUser) => {
     state.fetchCreateUser.loading = true;
   },
   [fetchCreateUser.fulfilled as any]: (state: IUser, action: any) => {
-    const {
-      likes,
-      dislikes,
-      favorites,
-      reports,
-      id,
-      coverImg,
-      email,
-      displayName,
-      language,
-    } = action.payload;
-    state.likes = likes;
-    state.dislikes = dislikes;
-    state.favorites = favorites;
-    state.reports = reports;
-    // state.id = id;
-    // state.coverImg = coverImg;
-    // state.email = email;
-    // state.displayName = displayName;
+    const { language } = action.payload;
+    //already set with gauth in useCheckUserInfo
     state.language = language;
 
     state.fetchCreateUser.loading = false;
@@ -133,7 +80,7 @@ export const fetchSignInGoogle = createAsyncThunk(
       .catch((error) => {
         return rejectWithValue(error.message);
       });
-  }
+  },
 );
 export const fetchSignInGoogleReducer = {
   [fetchSignInGoogle.pending as any]: (state: IUser) => {
@@ -164,7 +111,7 @@ export const fetchSignOut = createAsyncThunk(
     return await auth.signOut().catch((error) => {
       return rejectWithValue(error.message);
     });
-  }
+  },
 );
 export const fetchSignOutReducer = {
   [fetchSignOut.pending as any]: (state: IUser) => {

@@ -12,7 +12,8 @@
           "front/node_modules/",
           "back/node_modules/",
           "front/package-lock.json",
-          "back/package-lock.json"
+          "back/package-lock.json",
+          "back/dist/"
         ]
       },
       {
@@ -33,7 +34,8 @@
     "front/node_modules/": true,
     "back/node_modules/": true,
     "front/package-lock.json": true,
-    "back/package-lock.json": true
+    "back/package-lock.json": true,
+    "back/dist/": true
   },
   "hidefiles.selectedProfile": "Default"
 }
