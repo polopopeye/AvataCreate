@@ -1,6 +1,4 @@
 {
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
   "hidefiles.configurationType": "local",
   "hidefiles.globalConfig": {
     "profiles": [
@@ -8,7 +6,14 @@
         "name": "Default",
         "detail": "",
         "description": "Test",
-        "hidden": [".vscode/", "node_modules/", ".next/"]
+        "hidden": [
+          ".vscode/",
+          "front/.next/",
+          "front/node_modules/",
+          "back/node_modules/",
+          "front/package-lock.json",
+          "back/package-lock.json"
+        ]
       },
       {
         "name": "Strict",
@@ -24,8 +29,11 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     ".vscode/": true,
-    "node_modules/": true,
-    ".next/": true
+    "front/.next/": true,
+    "front/node_modules/": true,
+    "back/node_modules/": true,
+    "front/package-lock.json": true,
+    "back/package-lock.json": true
   },
   "hidefiles.selectedProfile": "Default"
 }
