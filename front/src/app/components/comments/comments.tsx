@@ -1,8 +1,5 @@
 /* eslint-disable @next/next/no-sync-scripts */
-import {
-  fetchCreateComment,
-  fetchGetComments,
-} from '@/app/store/slices/infoFile/infoFileComments.action';
+
 import { userNeedLogin } from '@/app/utils/misc/modalsToggle';
 import { Editor } from '@tinymce/tinymce-react';
 import { useRef } from 'react';
@@ -15,54 +12,6 @@ const Comments = () => {
   const { id: userId } = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const editorRef = useRef(null) as any;
-
-  const handleCreateComment = async () => {
-    if (!userId || userId === '') {
-      userNeedLogin();
-      return;
-    }
-
-    const commentInHTML = await editorRef.current.getContent().trim();
-    const commmentInText = await editorRef.current
-      .getContent({
-        format: 'text',
-      })
-      .trim();
-
-    if (commentInHTML.length > 1000 || commmentInText.length > 1000) {
-      toast.error('Comment must be less than 1000 characters long');
-      return;
-    }
-
-    if (commentInHTML.includes('script')) {
-      toast.error('Comment must not include script tag');
-      return;
-    }
-
-    if (!(commentInHTML.includes('iframe') || commentInHTML.includes('img'))) {
-      if (
-        !commentInHTML ||
-        !commmentInText ||
-        commentInHTML.length < 10 ||
-        commmentInText.length < 10
-      ) {
-        toast.error('Comment must be at least 10 characters long');
-        return;
-      }
-    }
-
-    const commentInHex = Buffer.from(commentInHTML).toString('hex');
-    dispatch(
-      fetchCreateComment({
-        comment: commentInHex,
-      }) as any
-    )
-      .unwrap()
-      .then((res: any) => {
-        dispatch(fetchGetComments() as any);
-        editorRef.current.setContent('');
-      });
-  };
 
   return (
     <>
@@ -97,7 +46,9 @@ const Comments = () => {
         </div>
         <div className="w-full p-4 mx-auto text-right">
           <a
-            onClick={handleCreateComment}
+            onClick={() => {
+              // TODO: add comment to db
+            }}
             className=" mx-auto mb-4  btn btn-primary  w-1/3 text-center"
           >
             Comment
