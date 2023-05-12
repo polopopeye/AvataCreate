@@ -13,6 +13,7 @@ export interface IUser {
   coverImg: string | undefined;
   displayName: string;
   language: string;
+  token?: string;
 
   fetchSignInGoogle: {
     loading: boolean;

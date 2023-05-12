@@ -1,11 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
+import { fetchAvatarCreate } from '@/app/store/slices/avatar/avatar.action';
 import fileToBase64 from '@/app/utils/convert/fileToBase64';
+import FileToBinaryString from '@/app/utils/convert/fileToBinaryString';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Avatar from '../general/avatar/avatar';
 
 const ProfileDetails = () => {
+  const dispatch = useDispatch();
   const { email, displayName } = useSelector((state: any) => state.user);
 
   const handleAvatarChange = async () => {
@@ -19,9 +22,24 @@ const ProfileDetails = () => {
 
     if (!file) return;
 
-    const fileBase64 = await fileToBase64(file);
+    // const fileInBinary = await FileToBinaryString(file);
+    const fileInBinary = await fileToBase64(file);
 
-    console.log(`fastlog => fileBase64:`, fileBase64);
+    dispatch(
+      fetchAvatarCreate({
+        name: 'test1234',
+        output_format: 'glb',
+        style: 'phr',
+        img: fileInBinary as string,
+        head_id: '43f21614-c7a2-4c3f-907f-c02ac3ec1e9b',
+        body_id: '4d8ac7df-c579-4ca5-a089-629a2659f3c0', //TODO: UPDATE THIS TO THE ACTUAL BODY ID
+        // collection_id?: string;
+        create_thumbnail: true,
+        optimize: true,
+      }) as any,
+    );
+    // 3842adbc-e31c-408f-94cd-7969af8cdd83
+    console.log(`fastlog => fileInBinary:`, fileInBinary);
 
     inputFile.value = '';
 

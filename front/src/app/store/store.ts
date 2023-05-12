@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import avatarSlice from './slices/avatar/avatar.slice';
 import userSlice from './slices/user/user.slice';
 
 const persistConfig = {
@@ -12,11 +13,12 @@ const persistConfig = {
 
 const rootReducer = {
   user: userSlice,
+  avatar: avatarSlice,
 };
 
 const persistedReducer = persistReducer(
   persistConfig,
-  combineReducers(rootReducer)
+  combineReducers(rootReducer),
 );
 
 const store = configureStore({

@@ -11,6 +11,7 @@ interface CreateUserData {
   email: string | null;
   displayName: string | null;
   language: string;
+  token?: string;
 }
 
 export const fetchCreateUser = createAsyncThunk(
@@ -26,13 +27,14 @@ export const fetchCreateUser = createAsyncThunk(
         language,
       })
       .then((res) => {
-        const { id, coverImg, email, displayName, language } = res.data;
+        const { id, coverImg, email, displayName, language, token } = res.data;
         return {
           id,
           coverImg,
           email,
           displayName,
           language,
+          token,
         };
       })
       .catch((err) => {
@@ -45,9 +47,10 @@ export const fetchCreateUserReducer = {
     state.fetchCreateUser.loading = true;
   },
   [fetchCreateUser.fulfilled as any]: (state: IUser, action: any) => {
-    const { language } = action.payload;
+    const { language, token } = action.payload;
     //already set with gauth in useCheckUserInfo
     state.language = language;
+    state.token = token;
 
     state.fetchCreateUser.loading = false;
   },
@@ -125,10 +128,6 @@ export const fetchSignOutReducer = {
     state.coverImg = '';
     state.displayName = '';
     state.language = '';
-    state.likes = [];
-    state.dislikes = [];
-    state.favorites = [];
-    state.reports = [];
 
     state.fetchSignOut.loading = false;
   },
