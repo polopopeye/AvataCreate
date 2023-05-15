@@ -21,7 +21,7 @@ const useCheckUserInfo = () => {
         setUserInfo({
           id: user.uid,
           email: user.email,
-          coverImg: user.photoURL,
+          // coverImg: user.photoURL,
           displayName: user.displayName,
         }),
       );

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
   apiAvatarCreate,
+  apiAvatarCreateBody,
+  apiAvatarCreateHead,
   apiAvatarGetBodies,
   apiAvatarGetHeads,
 } from '../../endpoints';
@@ -18,6 +20,15 @@ interface CreateAvatarInput {
   collection_id?: string;
   create_thumbnail: boolean;
   optimize: boolean;
+}
+
+interface CreateAvatarHeadInput {
+  name: string;
+  output_format: string;
+  style: string;
+  selfie_img: string;
+  hair_id?: string;
+  hair_color?: Object;
 }
 
 export const fetchAvatarCreate = createAsyncThunk(
@@ -51,30 +62,34 @@ export const fetchAvatarCreate = createAsyncThunk(
 );
 export const fetchAvatarCreateReducer = {
   [fetchAvatarCreate.pending as any]: (state: IAvatar) => {
+    toast.update('uploadingAvatar', {
+      render: 'Creating avatar...',
+      type: toast.TYPE.INFO,
+      isLoading: true,
+    });
+
+    toast.update('updatingBodyAvatar', {
+      render: 'Regenerating Avatar',
+      type: toast.TYPE.INFO,
+      isLoading: true,
+    });
+
     state.fetchAvatarCreate.loading = true;
   },
   [fetchAvatarCreate.fulfilled as any]: (state: IAvatar, action: any) => {
-    // const {
-    //   id,
-    //   avatar_link,
-    //   thumbnail_url,
-    //   created_at,
-    //   output_format,
-    //   body_id,
-    //   head_id,
-    //   name,
-    //   style,
-    // } = action.payload;
-    //    "name": "string",
-    // "output_format": "glb",
-    // "style": "phr",
-    // "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-    // "avatar_link": "http://example.com",
-    // "created_at": "2019-08-24T14:15:22Z",
-    // "thumbnail_url": "http://example.com",
-    // "body_id": "b83f1dd5-4773-4658-891d-0c7cc9862dc2",
-    // "head_id": "d9a1ca39-9208-40eb-9eaa-4615ead368b8"
-    toast.success('Avatar created successfully');
+    toast.update('uploadingAvatar', {
+      render: 'Avatar created sucessfully',
+      type: toast.TYPE.SUCCESS,
+      isLoading: false,
+      autoClose: 2000,
+    });
+
+    toast.update('updatingBodyAvatar', {
+      render: 'Avatar Regenerated',
+      type: toast.TYPE.SUCCESS,
+      isLoading: false,
+      autoClose: 2000,
+    });
 
     state.avatarCreate = action.payload;
 
@@ -83,6 +98,104 @@ export const fetchAvatarCreateReducer = {
   [fetchAvatarCreate.rejected as any]: (state: IAvatar, action: any) => {
     state.fetchAvatarCreate.loading = false;
     state.fetchAvatarCreate.error = action.error.message;
+  },
+};
+
+export const fetchAvatarCreateHead = createAsyncThunk(
+  'user/fetchAvatarCreateHead',
+  async (data: CreateAvatarHeadInput, { rejectWithValue, getState }) => {
+    const {
+      user: { token },
+    } = getState() as any;
+
+    return await axios
+      .post(apiAvatarCreateHead, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        console.log(res.data, 'res.data');
+        return res.data;
+      })
+      .catch((err) => {
+        return rejectWithValue(err.message);
+      });
+  },
+);
+export const fetchAvatarCreateHeadReducer = {
+  [fetchAvatarCreateHead.pending as any]: (state: IAvatar) => {
+    toast.update('uploadingAvatar', { render: 'Creating Avatar head...' });
+
+    state.fetchAvatarCreateHead.loading = true;
+  },
+  [fetchAvatarCreateHead.fulfilled as any]: (state: IAvatar, action: any) => {
+    toast.update('uploadingAvatar', {
+      render: 'Avatar head created sucessfully',
+      type: toast.TYPE.SUCCESS,
+      isLoading: false,
+    });
+
+    state.avatarCreateHead = action.payload;
+
+    state.fetchAvatarCreateHead.loading = false;
+  },
+  [fetchAvatarCreateHead.rejected as any]: (state: IAvatar, action: any) => {
+    state.fetchAvatarCreateHead.loading = false;
+    state.fetchAvatarCreateHead.error = action.error.message;
+  },
+};
+
+export const fetchAvatarCreateBody = createAsyncThunk(
+  'user/fetchAvatarCreateBody',
+  async (
+    data: {
+      user_id: string;
+      body_id: string;
+    },
+    { rejectWithValue, getState },
+  ) => {
+    const {
+      user: { token },
+    } = getState() as any;
+
+    return await axios
+      .post(apiAvatarCreateBody, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        console.log(res.data, 'res.data');
+        return res.data;
+      })
+      .catch((err) => {
+        return rejectWithValue(err.message);
+      });
+  },
+);
+export const fetchAvatarCreateBodyReducer = {
+  [fetchAvatarCreateBody.pending as any]: (state: IAvatar) => {
+    toast.update('updatingBodyAvatar', {
+      render: 'Loading Avatar Body...',
+      type: toast.TYPE.INFO,
+      isLoading: true,
+      autoClose: false,
+    });
+
+    state.fetchAvatarCreateBody.loading = true;
+  },
+  [fetchAvatarCreateBody.fulfilled as any]: (state: IAvatar, action: any) => {
+    toast.update('updatingBodyAvatar', {
+      render: 'Updating Body Avatar',
+      type: toast.TYPE.INFO,
+      isLoading: true,
+      autoClose: false,
+    });
+
+    state.avatarCreateBody = action.payload;
+
+    state.fetchAvatarCreateBody.loading = false;
+  },
+  [fetchAvatarCreateBody.rejected as any]: (state: IAvatar, action: any) => {
+    state.fetchAvatarCreateBody.loading = false;
+    state.fetchAvatarCreateBody.error = action.error.message;
   },
 };
 
@@ -113,7 +226,6 @@ export const fetchAvatarGetBodiesReducer = {
     state.fetchAvatarGetBodies.loading = true;
   },
   [fetchAvatarGetBodies.fulfilled as any]: (state: IAvatar, action: any) => {
-    toast.success('Avatar get bodies successfully');
     state.avatarBodies = action.payload;
     state.fetchAvatarGetBodies.loading = false;
   },
@@ -150,7 +262,6 @@ export const fetchAvatarGetHeadsReducer = {
     state.fetchAvatarGetHeads.loading = true;
   },
   [fetchAvatarGetHeads.fulfilled as any]: (state: IAvatar, action: any) => {
-    toast.success('Avatar get bodies successfully');
     state.avatarHeads = action.payload;
     state.fetchAvatarGetHeads.loading = false;
   },

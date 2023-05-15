@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import BodySelector from '@/app/components/bodySelector/bodySelector';
 import Comments from '@/app/components/comments/comments';
 import UserComments from '@/app/components/comments/userComments';
 import Container from '@/app/components/general/containers/container';
@@ -6,10 +7,12 @@ import ProfileDetails from '@/app/components/profile/ProfileDetails';
 import Scene from '@/app/components/threeJS/scene';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const InfoPage = () => {
-  const found = true; // profile exists?
+  const { currentAvatarUrl } = useSelector((state: any) => state.avatar);
+
+  const found = true; // TODO: profile exists?  Make diferents profiles...
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -18,12 +21,18 @@ const InfoPage = () => {
 
   return (
     <>
-      <div className="flex w-full h-screen">
-        <div className="grid h-full w-52 flex-grow card bg-base-300 rounded-box place-items-center">
-          select body!!
-        </div>
+      <div className="absolute z-50">
+        <BodySelector />
+      </div>
+      <div className="flex w-full h-screen  z-10">
         <div className="grid h-full flex-grow card bg-base-300 rounded-box place-items-center">
-          <Scene />
+          {currentAvatarUrl ? (
+            <Scene />
+          ) : (
+            <div className="w-full mx-auto pt-8">
+              <h1>Loading...</h1>
+            </div>
+          )}
         </div>
         <div className="grid h-full w-60 flex-grow card bg-base-300 rounded-box place-items-top pt-10 px-1">
           <ProfileDetails />

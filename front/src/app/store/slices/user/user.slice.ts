@@ -5,6 +5,7 @@ import {
   fetchCreateUserReducer,
   fetchSignInGoogleReducer,
   fetchSignOutReducer,
+  fetchUpdateUserReducer,
 } from './user.action';
 
 export interface IUser {
@@ -15,6 +16,10 @@ export interface IUser {
   language: string;
   token?: string;
 
+  currentBodyId?: string;
+  currentAvatarId?: string;
+  currentHeadId?: string;
+
   fetchSignInGoogle: {
     loading: boolean;
     error: string;
@@ -24,6 +29,10 @@ export interface IUser {
     error: string;
   };
   fetchCreateUser: {
+    loading: boolean;
+    error: string;
+  };
+  fetchUpdateUser: {
     loading: boolean;
     error: string;
   };
@@ -36,6 +45,10 @@ const initialState: IUser = {
   displayName: '',
   language: '',
 
+  currentBodyId: undefined,
+  currentAvatarId: undefined,
+  currentHeadId: undefined,
+
   fetchSignInGoogle: {
     loading: false,
     error: '',
@@ -48,6 +61,10 @@ const initialState: IUser = {
     loading: false,
     error: '',
   },
+  fetchUpdateUser: {
+    loading: false,
+    error: '',
+  },
 };
 
 const userSlice = createSlice({
@@ -55,13 +72,25 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfo: (state, action) => {
-      const { id, email, coverImg, displayName, language } = action.payload;
+      const {
+        id,
+        email,
+        coverImg,
+        displayName,
+        language,
+        currentBodyId,
+        currentAvatarId,
+        currentHeadId,
+      } = action.payload;
 
       if (id) state.id = id;
       if (email) state.email = email;
       if (coverImg) state.coverImg = coverImg;
       if (displayName) state.displayName = displayName;
       if (language) state.language = language;
+      if (currentBodyId) state.currentBodyId = currentBodyId;
+      if (currentAvatarId) state.currentAvatarId = currentAvatarId;
+      if (currentHeadId) state.currentHeadId = currentHeadId;
     },
     setEmptyUserInfo: (state) => {
       state = initialState;
@@ -71,6 +100,7 @@ const userSlice = createSlice({
     ...fetchSignInGoogleReducer,
     ...fetchSignOutReducer,
     ...fetchCreateUserReducer,
+    ...fetchUpdateUserReducer,
   },
 });
 

@@ -2,17 +2,19 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { toast } from 'react-toastify';
-import { apiUserCreate } from '../../endpoints';
+import { apiUserCreate, apiUserUpdate } from '../../endpoints';
 import { IUser } from './user.slice';
 
 interface CreateUserData {
   id: string;
-  coverImg: string | null;
-  email: string | null;
-  displayName: string | null;
-  language: string;
+  coverImg?: string | null;
+  email?: string | null;
+  displayName?: string | null;
+  language?: string;
   token?: string;
 }
+
+interface UpdateUserData extends CreateUserData {}
 
 export const fetchCreateUser = createAsyncThunk(
   'user/fetchCreateUser',
@@ -27,7 +29,17 @@ export const fetchCreateUser = createAsyncThunk(
         language,
       })
       .then((res) => {
-        const { id, coverImg, email, displayName, language, token } = res.data;
+        const {
+          id,
+          coverImg,
+          email,
+          displayName,
+          language,
+          token,
+          bodyId,
+          avatarId,
+          headId,
+        } = res.data;
         return {
           id,
           coverImg,
@@ -35,6 +47,9 @@ export const fetchCreateUser = createAsyncThunk(
           displayName,
           language,
           token,
+          bodyId,
+          avatarId,
+          headId,
         };
       })
       .catch((err) => {
@@ -47,16 +62,59 @@ export const fetchCreateUserReducer = {
     state.fetchCreateUser.loading = true;
   },
   [fetchCreateUser.fulfilled as any]: (state: IUser, action: any) => {
-    const { language, token } = action.payload;
+    const { language, token, coverImg, bodyId, avatarId, headId } =
+      action.payload;
     //already set with gauth in useCheckUserInfo
     state.language = language;
     state.token = token;
+    state.coverImg = coverImg;
+    state.currentBodyId = bodyId;
+    state.currentAvatarId = avatarId;
+    state.currentHeadId = headId;
 
     state.fetchCreateUser.loading = false;
   },
   [fetchCreateUser.rejected as any]: (state: IUser, action: any) => {
     state.fetchCreateUser.loading = false;
     state.fetchCreateUser.error = action.error.message;
+  },
+};
+
+export const fetchUpdateUser = createAsyncThunk(
+  'user/fetchUpdateUser',
+  async (data: UpdateUserData, { rejectWithValue, getState }) => {
+    const {
+      user: { token },
+    } = getState() as any;
+
+    return await axios
+      .put(apiUserUpdate, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        return rejectWithValue(err.message);
+      });
+  },
+);
+export const fetchUpdateUserReducer = {
+  [fetchUpdateUser.pending as any]: (state: IUser) => {
+    state.fetchUpdateUser.loading = true;
+  },
+  [fetchUpdateUser.fulfilled as any]: (state: IUser, action: any) => {
+    const { language, token, coverImg } = action.payload;
+    //already set with gauth in useCheckUserInfo
+    state.language = language;
+    state.token = token;
+    state.coverImg = coverImg;
+
+    state.fetchUpdateUser.loading = false;
+  },
+  [fetchUpdateUser.rejected as any]: (state: IUser, action: any) => {
+    state.fetchUpdateUser.loading = false;
+    state.fetchUpdateUser.error = action.error.message;
   },
 };
 

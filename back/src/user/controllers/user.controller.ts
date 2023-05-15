@@ -1,5 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Post, Put, Req, UseGuards } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { UserDto, UserFoundDto } from '../dto/user.dto';
 import { UserService } from '../services/user.service';
 
@@ -25,5 +31,20 @@ export class UserController {
   })
   create(@Body() user: UserDto) {
     return this.userService.createNewUser(user);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('/update/')
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'update user in db',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'update user in db',
+    type: UserDto,
+  })
+  updateUser(@Body() user: UserDto) {
+    return this.userService.updateUser(user.id, user);
   }
 }

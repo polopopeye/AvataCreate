@@ -54,7 +54,7 @@ export class unionsAvatarDto extends commonAvatarDto {
 }
 
 export class createAvatarDto extends commonAvatarDto {
-  @ApiProperty({ description: 'format of  the output file', example: 'glb' })
+  @ApiProperty({ description: 'format of  the output file', example: 'fbx' })
   output_format?: avatarOutputFormat;
 
   @ApiProperty({
@@ -97,7 +97,7 @@ export class createAvatarResponseDto extends commonAvatarDto {
 
   @ApiProperty({
     description: 'output format of the avatar',
-    example: 'glb',
+    example: 'fbx',
   })
   output_format: string;
 
