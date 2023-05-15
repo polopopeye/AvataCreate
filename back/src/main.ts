@@ -6,6 +6,13 @@ import { json, urlencoded } from 'body-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // increase timeout for large files
+  app.use((req, res, next) => {
+    req.setTimeout(60000);
+    res.setTimeout(60000);
+    next();
+  });
+
   const config = new DocumentBuilder()
     .setTitle('API')
     .setDescription('API Backend || AvataCreate')
