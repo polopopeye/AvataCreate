@@ -14,7 +14,7 @@ $ npm run dev
 ## Swagger
 
 ```bash
-http://localhost:3005/api
+http://localhost:3005/
 ```
 
 ## Bearer Token:
