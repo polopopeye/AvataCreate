@@ -30,6 +30,4 @@ Front:
 Back:
 `https://avatacreate-back.herokuapp.com/`
 
-I deployed in aws due some errors with heroku timeout request
-aws:
-http://34.245.31.123:3005/
+In order to check the code is better to run in local enviroment
