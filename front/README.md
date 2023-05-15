@@ -21,7 +21,7 @@ This project uses lot of stuff as:
 - redux for state management,
 - tailwindcss for styling, with a plugin called daisyUI
 - ThreeJS for the 3D models we use react-three for the integration with react and DREI for extra plugins for threejs.
-- We use firebase Auth to authenticate the users.
+- We use firebase Auth to authenticate the users
 
 ## You can see the app running here:
 
@@ -29,3 +29,7 @@ Front:
 `https://avatacreate-front.herokuapp.com/`
 Back:
 `https://avatacreate-back.herokuapp.com/`
+
+I deployed in aws due some errors with heroku timeout request
+aws:
+http://34.245.31.123:3005/
