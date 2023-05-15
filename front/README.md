@@ -22,3 +22,10 @@ This project uses lot of stuff as:
 - tailwindcss for styling, with a plugin called daisyUI
 - ThreeJS for the 3D models we use react-three for the integration with react and DREI for extra plugins for threejs.
 - We use firebase Auth to authenticate the users.
+
+## You can see the app running here:
+
+Front:
+`https://avatacreate-front.herokuapp.com/`
+Back:
+`https://avatacreate-back.herokuapp.com/`
