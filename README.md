@@ -1,17 +1,17 @@
 # AvataCreate
 
-Crea tu avatar y compartelo con el mundo
+Create your own avatar
 
 # Intro
 
-Esta app es un monolito simple que consta de 2 partes
+this project is simple just:
 
 Frontend: nextjs + tailwindcss + typescript
 Backend: nestjs + typescript
 
-En cada carpeta hay un README.md con las instrucciones para correr cada parte
+In every folder there is a README.md with the instructions to run the project.
 
-hay un archivo con variables de entorno de ejemplo, para correr el proyecto hay que copiarlo y renombrarlo a .env y reemplazar los valores por los que correspondan.
+on every folder there is a .env file with the variables to run the project. just copy the .env.example and rename it to .env and fill the variables with the correct values.
 
 # Requisitos
 

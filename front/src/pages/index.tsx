@@ -1,12 +1,9 @@
-import Link from 'next/link';
-
 const Home = () => {
   return (
     <main>
-      HIIII!!!! THIS IS THE HOME PAGE
-      <div>test!</div>
-      <Link href="/test">AVATAR CREATOR PROFILE</Link>
-      <Link href="/test2">GALLERY OF AVATARS CREATED</Link>
+      HIIII!!!! THIS IS THE HOME PAGE (Had No time to make it look good, sorry)
+      <br />
+      <br />
     </main>
   );
 };

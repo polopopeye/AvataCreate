@@ -10,12 +10,20 @@ const useRedirect = () => {
     if (!router) return;
     if (router.pathname === '/signin') {
       if (id) {
-        router.push('/profile');
+        router.push('/profile-creator');
       }
     }
 
     if (router.pathname === '/profile') {
       if (!id) {
+        router.push('/signin');
+      }
+    }
+
+    if (router.pathname === '/') {
+      if (id) {
+        router.push('/profile-creator');
+      } else {
         router.push('/signin');
       }
     }
