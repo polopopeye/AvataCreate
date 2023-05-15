@@ -1,6 +1,6 @@
 # AvataCreate
 
-Create your own avatar
+Create your own avatar.
 
 # Intro
 
