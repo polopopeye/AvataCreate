@@ -60,6 +60,11 @@ export const randomAnimalEmoji = () => {
 };
 
 export const getEmojiFromUnicode = (unicode: string) => {
+  if (!unicode) return '';
+
   const comp = unicode.replace(/&#x/g, '').replace(/;/g, '');
+
+  if (!comp) return '';
+
   return String.fromCodePoint(Number(`0x${comp}`));
 };

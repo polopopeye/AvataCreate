@@ -8,7 +8,7 @@ const LoginRegister = () => {
       <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96 pt-32 pb-32">
           <div>
-            <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            <h2 className="mt-6 text-3xl font-extrabold ">
               Sign in to your account
             </h2>
           </div>
@@ -16,10 +16,7 @@ const LoginRegister = () => {
           <div className="mt-16">
             <div>
               <div>
-                <p className="text-sm font-medium text-gray-700">
-                  Sign in with
-                </p>
-
+                <p className="text-sm font-medium ">Sign in with</p>
                 <GoogleSignInBtn />
               </div>
             </div>
