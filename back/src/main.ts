@@ -8,8 +8,8 @@ async function bootstrap() {
 
   // increase timeout for large files
   app.use((req, res, next) => {
-    req.setTimeout(60000);
-    res.setTimeout(60000);
+    req.setTimeout(300000);
+    res.setTimeout(300000);
     next();
   });
 
