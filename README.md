@@ -18,3 +18,5 @@ on every folder there is a .env file with the variables to run the project. just
 nodejs >= 19.6.1
 npm >= 9.4.0
 tsc >= 5.0.4
+
+mongoDB (otherwise connect to remote url in .env file)
