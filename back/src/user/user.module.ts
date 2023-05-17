@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { forwardRef } from '@nestjs/common/utils';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from 'src/auth/auth.module';
-import { AvatarModule } from 'src/avatar/avatar.module';
+import { AuthModule } from '../auth/auth.module';
+import { AvatarModule } from '../avatar/avatar.module';
 import { UserController } from './controllers/user.controller';
 import { UserSchema } from './schemas/user.schema';
 import { UserService } from './services/user.service';

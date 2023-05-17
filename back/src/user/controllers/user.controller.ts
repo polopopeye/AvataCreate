@@ -5,7 +5,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../../auth/auth.guard';
 import { UserDto, UserFoundDto } from '../dto/user.dto';
 import { UserService } from '../services/user.service';
 
@@ -13,9 +13,7 @@ import { UserService } from '../services/user.service';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-  // @UseGuards(AuthGuard)
   @Post('/create')
-  // @ApiBearerAuth()
   @ApiOperation({
     summary: 'create user in db and return user with token',
   })

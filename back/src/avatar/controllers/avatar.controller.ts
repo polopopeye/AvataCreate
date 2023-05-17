@@ -13,7 +13,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../../auth/auth.guard';
 import { createAvatarDto, unionsAvatarDto } from '../dto/avatar.dto';
 import { saveBodyInputDto } from '../dto/body.dto';
 import { unionsAvatarCreateHeadDto } from '../dto/heads.dto';
