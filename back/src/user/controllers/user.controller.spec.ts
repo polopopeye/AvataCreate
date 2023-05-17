@@ -72,8 +72,6 @@ describe('User Controller', () => {
       language: 'en',
     };
 
-    // const result = app.post('/user/create').send(userDto).expect(201);
-
     const result = await request(app.getHttpServer())
       .post('/user/create')
       .send(userDto)
